@@ -66,7 +66,7 @@ spring:
 #            # JSON 형태에서 "properties"라는 key값에 해당하는 value에 회원 정보가 담겨져있다.
 mybatis:
   mapper-locations: mybatis-mapper/**/*.xml
-  type-aliases-package: com.apple
+  type-aliases-package: com.apple.apple
 
 #톰캣 포트 변경
 server:
