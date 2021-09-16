@@ -1,0 +1,73 @@
+spring:
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username : daedongmatjido@gmail.com
+#    password : koreait21
+#    properties :
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:templates/
+    suffix: .html
+    mode: HTML
+    cache: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/apple
+    username: test
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+#  servlet:
+#    multipart:
+#      max-file-size: 5MB
+#      max-request-size: 30MB
+#      location: C:/springImg
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: 202114283195-271p3dbj50ibjjtfktvqs3ieg04jcr6t.apps.googleusercontent.com
+#            client-secret: imnNLTyaRA0O8JL_Q6hcs_pI
+#            scope:
+#              - profile
+#              - email
+#          facebook:
+#            client-id: 1126489327760079
+#            client-secret: 1515bcf9e53aa1c44937fe7b3b6a1d25
+#            scope:
+#              - email
+#              - public_profile
+#          kakao:
+#            authorization-grant-type: authorization_code
+#            client-id: a2092cda122c9470fdba4bae5a79685e
+#            client-secret: Bb1mVCRuWMnG7wGQj8qyd038UWUPiPIh
+#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+#            scope:
+#              - profile_nickname
+#              - profile_image
+#            client-authentication-method: POST
+#            client-name: Kakao
+#        provider:
+#          kakao:
+#            authorization-uri: https://kauth.kakao.com/oauth/authorize
+#            token-uri: https://kauth.kakao.com/oauth/token
+#            user-info-uri: https://kapi.kakao.com/v2/user/me
+#            user-name-attribute: properties
+#            # JSON 형태에서 "properties"라는 key값에 해당하는 value에 회원 정보가 담겨져있다.
+mybatis:
+  mapper-locations: mybatis-mapper/**/*.xml
+  type-aliases-package: com.apple
+
+#톰캣 포트 변경
+server:
+  port: 8090
