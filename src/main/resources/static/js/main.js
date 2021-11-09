@@ -14,10 +14,15 @@ let enterNewScene = false; //새로운 scene이 시작되는 순간 true
                 messageA: document.querySelector('#scroll-section-0.main-message.a'),
                 messageB: document.querySelector('#scroll-section-0.main-message.b'),
                 messageC: document.querySelector('#scroll-section-0.main-message.c'),
-                messageD: document.querySelector('#scroll-section-0.main-message.d')
+                messageD: document.querySelector('#scroll-section-0.main-message.d'),
+                canvas: document.querySelector('#video-canvas-0'),
+                context: document.querySelector('#video-canvas-0').getContext('2d'),
+                videoImages: []
             },
             //어느 시점에 치고 빠질 지
             values:{
+                videoImageCount: 300,
+                imageSequence : [0, 299],
                 messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
                 messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
                 messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
@@ -88,6 +93,16 @@ let enterNewScene = false; //새로운 scene이 시작되는 순간 true
         }
     ];
 
+    function setCanvasImages(){
+        let imgElem;
+        for(let i=0; i<sceneInfo[0].values.videoImageCount; i++){
+            imgElem = new Image();
+            imgElem.src = `./video/001/IMG_${6726 + i}.JPG`;
+            sceneInfo[0].objs.videoImages.push(imgElem);
+        }
+    }
+    setCanvasImages();
+
     function setLayout(){
         //각 스크롤 섹션의 높이 세팅
         for(let i = 0; i<sceneInfo.length; i++) {
@@ -111,6 +126,9 @@ let enterNewScene = false; //새로운 scene이 시작되는 순간 true
             }
         }
         document.body.setAttribute('id',`show-scene-${currentScene}`);
+
+        const heightRatio = window.innerHeight / 1080;
+        sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
     }
 
     function calcValues(values, currentYOffset){
@@ -146,6 +164,9 @@ let enterNewScene = false; //새로운 scene이 시작되는 순간 true
         switch (currentScene) {
             case 0:
                 // console.log('0 play');
+                let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+                objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+
                 if (scrollRatio <= 0.22) {
                     // in
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
@@ -263,7 +284,10 @@ let enterNewScene = false; //새로운 scene이 시작되는 순간 true
     });
 
     //DomContentLoaded 설정시 좀 더 빨리 로드됨
-    window.addEventListener('load',setLayout); //sceneInfo의 scrollHeight 값들을 잡아줌
-    //load로 설정 시 사진부터 모든 설정이 다 로드됨
+    window.addEventListener('load', () =>{//load로 설정 시 사진부터 모든 설정이 다 로드됨
+        setLayout();//sceneInfo의 scrollHeight 값들을 잡아줌
+        sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+    });
+
     window.addEventListener('resize',setLayout);
 })();
